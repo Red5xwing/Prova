@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jspsych.js"></script>
+    <script src="plugins/jspsych-fullscreen.js"></script>
+    <script src="plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="plugins/jspsych-html-button-response.js"></script>
+    <script src="plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="plugins/jspsych-survey-multi-select.js" ></script>
+    <script src="plugins/jspsych-preload.js" ></script>
+    <script src="plugins/jspsych-html-slider-response.js" ></script>   
+    <script src="plugins/jspsych-survey-html-form.js" ></script>
+    <script src="plugins/jspsych-survey-text.js"></script>
+    <script src="plugins/jspsych-instructions.js"></script>
+    <script src="plugins/jspsych-video-button-response.js"></script>
+    <script src="plugins/jspsych-video-keyboard-response.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../Exp/css/jspsych.css">
+    <style> 
+      body {background-color: black; color: white; font-family:'Fira Sans';}
+      footer {height: 5%; font-size: 8px ;line-height:2; position: fixed; left: 0; bottom: 0;width: 100%; 
+        background-color: #D9D9D6; color: black ;text-align: center;} 
+      div {text-align: center; text-justify: inter-word;}
+      p {margin-left: 10%; margin-right: 10%; text-align: center;} 
+      video {height: 95vh;}
+    </style>
+  </head>
+  <body></body>
+  <script>
+
+    var footer ="<footer> <img src=Immagini\\dimes_extended_black.png  height=100%> &emsp;<img src=Immagini\\aism.png  height=95%>  </footer>";
+    var timeline = [];
+
+    var preload = {
+      type: 'preload',  
+      auto_preload: true
+    };
+
+    var pagina_iniziale = {
+	type: 'instructions',
+	pages: ["<h2> <img src=Immagini\\logo_orizzontale_WHITE.png  height= 60vh> &emsp;<img src=Immagini\\aism.png  height=60vh> </h2>" 
+    + "<h1> <img src=Immagini\\box2.png  height=30 px> Benvenuti!  </h1>" 
+		+"<p>Lo scopo di questo esperimento di controllo è comprendere se la capacità di valutare l’entità di un carico sollevato da una persona è influenzata dal tipo di contrazione muscolare osservata." 
+        +"<br>"+"<p> La partecipazione è libera ed è possibile revocare il consenso in qualsiasi momento. "
+        +"<p> Inoltre, a studio terminato è possibile, richiedere l’eliminazione dei propri dati contattando gli sperimentatori. "
+        +"<p> La durata totale dell’esperimento sarà di massimo <u>40 minuti.</u>"
+        +"<p> Non ci sono rischi nell’esecuzione dello studio. " + footer
+    , 
+    footer 
+        + "<h2>Protocollo sperimentale: Istruzioni </h2>"
+        +"<p>Dopo aver compilato un breve questionario, eseguirai l'esperimento vero e proprio. "
+        +"Durante l'esperimento visualizzerai coppie di video in sequenza. "
+        +"<p>I video mostreranno: un ragazzo (o una ragazza) che solleva una scatola dal petto e la deposita su una mensola."
+        +" I video saranno mostrati a coppie, in sequenza ravvicinata. "
+        +"<p> L'obiettivo sarà di valutare se il peso dell'oggetto spostato (la scatola) sarà superiore"
+        +" nel primo video o nel secondo. "
+        +"<p> Dopo aver visto i due video risponderai a una domanda in merito al peso delle scatole, nello specifico la domanda chiederà: "
+        +"<h3> <i>Quale delle due scatole era più pesante? </i></h3> "  
+        +"<p> per rispondere dovrai premere sulla <b>testiera</b> la <b>freccia sinistra</b> se la scatola spostata era più pesante nel <b>primo</b> video "
+        +" rispetto a quella del secondo video o " 
+        +"la <b>freccia destra </b> se la scatola del </b>secondo</b> video era più pesante. "
+        +"<p style='text-align: center';><button class='jspsych-btn2'>Prima <img src='immagini\\left.png'> </button>"
+        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <button class="jspsych-btn2"><img src="immagini\\right.png"> Seconda</button>' 
+        ,
+  ],
+	post_trial_gap: 0, 
+	show_clickable_nav: true,
+	};	
+//imeline.push(pagina_iniziale);
+
+var survey = {
+      type: 'survey-text',
+      preamble: "<h2> Questionario " + footer,
+      questions: [
+        {prompt: '<p>Inserisci le prime due lettere del cognome e del nome', placeholder: 'ROMA', rows:1, columns: 4}, 
+        {prompt: 'Anno di nascita', placeholder: '1989', rows:1, columns: 4}
+      ]
+    };
+//timeline.push(survey);
+
+var myArray = [
+  {primoV: 'VideoM\\0_M_CON.mp4', data:{ConditionName: 'M_Con_0_R1'}, nome: 'M_Con_0_R1', secondoV: 'VideoM\\7.5_M_CON.mp4'},   
+    {primoV: 'VideoM\\2.5_M_CON.mp4', data:{ConditionName: 'M_Con_2.5_R1'}, nome: 'M_Con_2.5_R1', secondoV: 'VideoM\\7.5_M_CON.mp4'},  
+    {primoV: 'VideoM\\5_M_CON.mp4', data:{ConditionName: 'M_Con_5_R1'}, nome: 'M_Con_5_R1', secondoV: 'VideoM\\7.5_M_CON.mp4'},
+    {primoV: 'VideoM\\7.5_M_CON.mp4', data:{ConditionName: 'M_Con_7.5_R1'}, nome: 'M_Con_7.5_R1', secondoV: 'VideoM\\7.5_M_CON.mp4'},
+];
+
+
+
+// Mischia le coppie
+var coppie_ripetute = jsPsych.randomization.shuffle(myArray);
+
+var pausa = {
+    type: 'html-button-response',
+    stimulus: "<h1>Fai una pausa!</h1>" + footer, 
+    choices: ['<span style="font-size:15px"> premi per continuare </span>'],   
+
+};
+
+var fissazione = {
+    type: "html-keyboard-response", 
+    stimulus: "" ,// +`<p>Trial numero ${i + 1}</p>`,	 
+    trial_duration: 666,
+    response_allowed_while_playing: false, 
+    prompt: "<img src='Immagini\\00.png' height='200'>"
+
+};
+var trialCounter = 1;
+
+var quest = {
+    type: "html-keyboard-response",
+    stimulus:  "<span style='font-size:30px;'>Quale delle due scatole era più pesante?</span>",
+    choices: ['ArrowLeft', 'ArrowRight'],
+    prompt: footer + "<h1>&nbsp;</h1>" +
+    '<button class="jspsych-btn2">Prima <img src="immagini\\left.png"> </button>' +
+    '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="jspsych-btn2"><img src="immagini\\right.png"> Seconda</button>', 
+    data: jsPsych.timelineVariable('data'),
+    on_finish: function() {
+        trialCounter++;
+    }
+};
+
+// Prova di inizio
+var INIZIO = {
+    type: 'html-button-response',
+    stimulus: footer + "<h1> INIZIO ESPERIMENTO </h1>" + "<br>",
+    response_ends_trial: true,
+    choices: ['<span style="font-size:15px"> premi per continuare </span>'],   
+    data: "666",
+};
+timeline.push(INIZIO);
+
+// Struttura di ogni coppia di stimoli
+var exp = {
+  timeline_variables: myArray,
+    timeline: [
+        fissazione,
+        {
+            type: 'video-keyboard-response',
+            stimulus: [jsPsych.timelineVariable('primoV')],
+            autoplay: true, 
+            trial_ends_after_video: true, 
+            response_allowed_while_playing: false, 
+            choices: jsPsych.NO_KEYS,
+            post_trial_gap: 500,
+        },
+        {
+            type: 'video-keyboard-response',
+            stimulus: [jsPsych.timelineVariable('secondoV')],
+            autoplay: true, 
+            trial_ends_after_video: true, 
+            response_allowed_while_playing: false, 
+            choices: jsPsych.NO_KEYS,
+            post_trial_gap: 500,
+        }, 
+        quest
+    ],
+};
+
+// Aggiungi le coppie e la pausa
+for (let i = 0; i < 4; i++) {
+    console.log("Iterazione:", i);
+    // Aggiungi il trial per la coppia
+    timeline.push(exp);
+
+    // Aggiungi una pausa dopo ogni prova
+    if ((i + 1) % 2 === 0 ) {
+      //console.log("Aggiungo pausa all'iterazione:", i);  
+      timeline.push(pausa);
+    }
+}
+
+
+
+
+//////fine
+var end = {
+	type: "html-keyboard-response",
+		stimulus: "<h2 style=color:red;> Grazie di aver partecipato all'esperimento!</h2>" + footer,	 
+    trial_duration: 3000,
+	        };	 
+timeline.push(end);
+
+// first argument is the format, second is the filename.
+// the format can be either 'csv' or 'json'.
+//jsPsych.data.get().localSave('csv','mydata.csv');
+
+function saveData(name, data){
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({filename: name+'_'+today, filedata: data}));
+}    
+
+var today = new Date();
+     var dd = String(today.getDate()).padStart(2, '0');
+     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+     var yyyy = today.getFullYear();
+     var ss = String(today.getSeconds()).padStart(2, '0');
+     var min = String(today.getMinutes()).padStart(2, '0');
+     var hh = String(today.getHours()).padStart(2, '0');
+       today = mm +  dd + yyyy + '-' + hh + min + ss;
+
+jsPsych.init({
+	timeline: timeline,
+        on_finish: function() {
+            
+            jsPsych.data.get().localSave('csv',today+'.csv');
+        }
+    })
+    </script>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jspsych.js"></script>
+    <script src="plugins/jspsych-fullscreen.js"></script>
+    <script src="plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="plugins/jspsych-html-button-response.js"></script>
+    <script src="plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="plugins/jspsych-survey-multi-select.js" ></script>
+    <script src="plugins/jspsych-preload.js" ></script>
+    <script src="plugins/jspsych-html-slider-response.js" ></script>   
+    <script src="plugins/jspsych-survey-html-form.js" ></script>
+    <script src="plugins/jspsych-survey-text.js"></script>
+    <script src="plugins/jspsych-instructions.js"></script>
+    <script src="plugins/jspsych-video-button-response.js"></script>
+    <script src="plugins/jspsych-video-keyboard-response.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../Exp/css/jspsych.css">
+    <style> 
+      body {background-color: black; color: white; font-family:'Fira Sans';}
+      footer {height: 5%; font-size: 8px ;line-height:2; position: fixed; left: 0; bottom: 0;width: 100%; 
+        background-color: #D9D9D6; color: black ;text-align: center;} 
+      div {text-align: center; text-justify: inter-word;}
+      p {margin-left: 10%; margin-right: 10%; text-align: center;} 
+      video {height: 95vh;}
+    </style>
+  </head>
+  <body></body>
+  <script>
+
+    var footer ="<footer> <img src=Immagini\\dimes_extended_black.png  height=100%> &emsp;<img src=Immagini\\aism.png  height=95%>  </footer>";
+
+    var preload = {
+      type: 'preload',  
+      auto_preload: true
+    };
+
+var timeline = [];
+
+// Prova di inizio
+var INIZIO = {
+    type: 'html-button-response',
+    stimulus: footer + "<h1> INIZIO ESPERIMENTO </h1>" + "<br>",
+    response_ends_trial: true,
+    choices: ['<span style="font-size:15px"> premi per continuare </span>'],   
+    data: "666",
+};
+timeline.push(INIZIO);
+
+
+
+// Funzione per il trial di pausa
+var pausa_trial = {
+  type: 'html-keyboard-response',
+  stimulus: '<p>Fai una pausa! Premi uno spazio per continuare.</p>',
+  choices: [' '], 
+  data: { isPausa: true }  // Proprietà che indica il trial di pausa
+};
+
+// Creazione dei 20 trial
+for (let i = 0; i < 20; i++) {
+  // Definisci il trial normale (può essere qualsiasi tipo di trial)
+  var trial = {
+    type: 'html-keyboard-response',
+    stimulus: `<p>Trial numero ${i + 1}</p>`,
+    choices: [' ']
+  };
+
+  // Aggiungi il trial alla timeline
+  timeline.push(trial);
+
+  // Ogni 20 trial aggiungi una pausa
+  if ((i + 1) % 5 === 0) {
+    timeline.push(pausa_trial);
+  }
+}
+
+// fine
+var end = {
+	type: "html-keyboard-response",
+		stimulus: "<h2 style=color:red;> Grazie di aver partecipato all'esperimento!</h2>" + footer,	 
+    trial_duration: 3000,
+	        };	 
+timeline.push(end);
+
+
+
+function saveDataAsJSON() {
+  const jsonData = jsPsych.data.get().json(); // Ottieni i dati in formato JSON
+  const blob = new Blob([jsonData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  // Simula il download del file JSON
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = today+'_ak47.json';
+  a.click();
+  
+  // Libera la memoria revocando l'URL temporaneo
+  URL.revokeObjectURL(url);
+}
+
+// Salva i dati a intervalli regolari o dopo ogni trial
+jsPsych.init({
+  timeline: timeline,
+  on_trial_finish: function(data) { // `data` contiene i dati del trial corrente
+    if (data.isPausa) {  
+      saveDataAsJSON();  // Salva i dati quando si verifica un trial di pausa
+    }
+  }, 
+  on_finish: function() {
+            jsPsych.data.get().localSave('csv',today+'.csv');
+        }
+});
+
+
+var today = new Date();
+     var dd = String(today.getDate()).padStart(2, '0');
+     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+     var yyyy = today.getFullYear();
+     var ss = String(today.getSeconds()).padStart(2, '0');
+     var min = String(today.getMinutes()).padStart(2, '0');
+     var hh = String(today.getHours()).padStart(2, '0');
+       today = mm +  dd + yyyy + '-' + hh + min + ss;
+
+
+    </script>
+</html>
