@@ -15,7 +15,7 @@
     <script src="plugins/jspsych-video-button-response.js"></script>
     <script src="plugins/jspsych-video-keyboard-response.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../Exp/css/jspsych.css">
+    <link rel="stylesheet" href="../css/jspsych.css">
     <style> 
       body {background-color: black; color: white; font-family:'Fira Sans';}
       footer {height: 5%; font-size: 8px ;line-height:2; position: fixed; left: 0; bottom: 0;width: 100%; 
@@ -261,6 +261,9 @@ function saveData(name, data){
   xhr.send(JSON.stringify({filename: name+'_'+today, filedata: data}));
 }    
 
+
+
+	  
 var today = new Date();
      var dd = String(today.getDate()).padStart(2, '0');
      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -269,6 +272,7 @@ var today = new Date();
      var min = String(today.getMinutes()).padStart(2, '0');
      var hh = String(today.getHours()).padStart(2, '0');
        today = mm +  dd + yyyy + '-' + hh + min + ss;
+	data = mm + dd + yyyy	
 
 jsPsych.init({
 	timeline: timeline,
