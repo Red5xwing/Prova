@@ -34,9 +34,8 @@
     var preload = {
       type: 'preload',  
       auto_preload: true,
-	prompt: "<h5> Caricamento in corso...</h5>", 
-	video: ['VideoM\\0_M_CON.mp4','VideoM\\2.5_M_CON.mp4','VideoM\\5_M_CON.mp4','VideoM\\7.5_M_CON.mp4','VideoM\\10_M_CON.mp4', 
-	       'VideoM\\12.5_M_CON.mp4','VideoM\\15_M_CON.mp4'], 
+	message: "<h5> Caricamento in corso...</h5>", 
+	video: ['VideoM\\0_M_CON.mp4','VideoM\\2.5_M_CON.mp4','VideoM\\5_M_CON.mp4','VideoM\\7.5_M_CON.mp4','VideoM\\10_M_CON.mp4','VideoM\\12.5_M_CON.mp4','VideoM\\15_M_CON.mp4'], 
 	continue_after_error: true, 
 	show_detailed_errors: false,
 	show_progress_bar: true,
@@ -78,13 +77,19 @@ timeline.push(preload)
 	};	
 timeline.push(pagina_iniziale);
 
+var firstAnswer = "";  
+	  
 var survey = {
       type: 'survey-text',
       preamble: "<h2> Questionario " + footer,
       questions: [
         {prompt: '<p>Inserisci le prime due lettere del cognome e del nome', placeholder: 'ROMA', rows:1, columns: 4}, 
         {prompt: 'Anno di nascita', placeholder: '1989', rows:1, columns: 4}
-      ]
+      ], 
+	on_finish: function(data) {       	// Estrai la risposta alla prima domanda
+    var responses = JSON.parse(data.response);
+    firstAnswer = responses.Q0; 		// 'Q0' è la prima domanda nel questionario
+  }
     };
 timeline.push(survey);
 
@@ -288,7 +293,7 @@ jsPsych.init({
 	timeline: timeline,
         on_finish: function() {
             
-            jsPsych.data.get().localSave('csv',today+'.csv');
+            jsPsych.data.get().localSave('csv','P_'+ firstAnswer+ '_' +data+'.csv');
         }
     })
     </script>
