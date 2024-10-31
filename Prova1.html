@@ -47,8 +47,23 @@ var INIZIO = {
 };
 timeline.push(INIZIO);
 
+var var firstAnswer = "";  
+	  
+var survey = {
+      type: 'survey-text',
+      preamble: "<h2> Questionario " + footer,
+      questions: [
+        {prompt: '<p>ID', placeholder: 'AA', rows:1, columns: 4}, 
+      ], 
+  on_finish: function(data) {
+    // Estrai la risposta alla prima domanda
+    var responses = JSON.parse(data.responses);
+    firstAnswer = responses.Q0; // 'Q0' è la prima domanda nel questionario
+  }
+    };
+timeline.push(survey)
 
-
+	  
 // Funzione per il trial di pausa
 var pausa_trial = {
   type: 'html-keyboard-response',
@@ -93,7 +108,7 @@ function saveDataAsJSON() {
   // Simula il download del file JSON
   const a = document.createElement('a');
   a.href = url;
-  a.download = today+'_ak47.json';
+  a.download = firstAnswer+"_"giorno'.json';
   a.click();
   
   // Libera la memoria revocando l'URL temporaneo
@@ -122,6 +137,7 @@ var today = new Date();
      var min = String(today.getMinutes()).padStart(2, '0');
      var hh = String(today.getHours()).padStart(2, '0');
        today = mm +  dd + yyyy + '-' + hh + min + ss;
+	  giorno= mm +  dd + yyyy;
 
 
     </script>
