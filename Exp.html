@@ -39,15 +39,16 @@
 
     var pagina_iniziale = {
 	type: 'instructions',
-	pages: ["<h2><img src=Immagini\\logo_orizzontale_WHITE.png  height= 60vh> &emsp;<img src=Immagini\\aism.png  height=60vh> </h2>" 
+	pages: 
+	["<h2> <img src=Immagini\\logo_orizzontale_WHITE.png  height= 60vh> &emsp;<img src=Immagini\\aism.png  height=60vh> </h2>" 
     	+ "<h1> <img src=Immagini\\box2.png  height=30 px> Benvenuti!  </h1>" 
 	+"<p>Lo scopo di questo esperimento di controllo è comprendere se la capacità di valutare l’entità di un carico sollevato da una persona è influenzata dal tipo di contrazione muscolare osservata." 
         +"<br>"+"<p> La partecipazione è libera ed è possibile revocare il consenso in qualsiasi momento. "
         +"<p> Inoltre, a studio terminato è possibile, richiedere l’eliminazione dei propri dati contattando gli sperimentatori. "
         +"<p> La durata totale dell’esperimento sarà di massimo <u>40 minuti.</u>"
         +"<p> Non ci sono rischi nell’esecuzione dello studio. " + footer
-    , 
-    footer 
+    		, 
+    		footer 
         + "<h2>Protocollo sperimentale: Istruzioni </h2>"
         +"<p>Dopo aver compilato un breve questionario, eseguirai l'esperimento vero e proprio. "
         +"Durante l'esperimento visualizzerai coppie di video in sequenza. "
@@ -60,10 +61,10 @@
         +"<p> per rispondere dovrai premere sulla <b>testiera</b> la <b>freccia sinistra</b> se la scatola spostata era più pesante nel <b>primo</b> video "
         +" rispetto a quella del secondo video o " 
         +"la <b>freccia destra </b> se la scatola del </b>secondo</b> video era più pesante. "
-        +"<p style='text-align: center';><button class='jspsych-btn2'>Prima <img src='Immagini\\left.png'> </button>"
-        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <button class="jspsych-btn2"><img src='Immagini\\right.png'> Seconda</button>' 
-        
-  	],
+        +"<p style='text-align: center';><button class='jspsych-btn2'>Prima <img src='immagini\\left.png'> </button>"
+        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <button class="jspsych-btn2"><img src="immagini\\right.png"> Seconda</button>' 
+        ,
+  ],
 	post_trial_gap: 0, 
 	show_clickable_nav: true,
 	};	
