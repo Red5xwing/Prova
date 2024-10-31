@@ -50,28 +50,27 @@ timeline.push(INIZIO);
 var firstAnswer = "";  
 	  
 var survey = {
-      type: 'survey-text',
-      preamble: "<h2> Questionario " + footer,
-      questions: [
-        {prompt: '<p>ID', placeholder: 'AA', rows:1, columns: 4}, 
-      ], 
+  type: 'survey-text',
+  preamble: "<h2> Questionario " + footer,
+  questions: [
+    {prompt: '<p>ID', placeholder: 'AA', rows:1, columns: 4}, 
+  ], 
   on_finish: function(data) {
-	console.log("Data object:", data); // Verifica cosa contiene `data`  
-    // Controlla se `data.responses` esiste e non è vuoto
-    if (data.responses) {
+    console.log("Data object:", data); // Verifica cosa contiene `data`
+    
+    if (data.response) {
       try {
-        // Estrai la risposta alla prima domanda
-        var responses = JSON.parse(data.responses);
+        var responses = data.response; // Usa `data.response` invece di `data.responses`
         firstAnswer = responses.Q0; // 'Q0' è la prima domanda nel questionario
         console.log("First answer:", firstAnswer); // Stampa la risposta per debug
       } catch (error) {
-        console.error("Errore nel parsing di data.responses:", error);
+        console.error("Errore nel parsing di data.response:", error);
       }
     } else {
-      console.warn("data.responses è undefined o vuoto.");
+      console.warn("data.response è undefined o vuoto.");
     }
   }
-    };
+};
 timeline.push(survey)
 
 	  
