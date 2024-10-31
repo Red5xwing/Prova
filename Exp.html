@@ -116,12 +116,11 @@ var quest = {
     	    stimulus: "<span style=font-size:30px;>Quale delle due scatole era più pesante?</span>", 
           choices: ['ArrowLeft','ArrowRight'],
           prompt: [footer + "<h1> &nbsp;  </h1>"+
-            '<button class="jspsych-btn2">Prima <img src="immagini\\left.png"> </button>'
+            '<button class="jspsych-btn2">Prima <img src="Immagini\\left.png"> </button>'
             +  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="jspsych-btn2"><img src="immagini\\right.png"> Seconda</button>'] , 
                 data: jsPsych.timelineVariable('data'),
         };
 
-///////PROVA
 ///////PROVA
 var PROVA_text = {
 	type: "html-button-response",
@@ -154,13 +153,6 @@ var PROVA = {
     ],
     randomize_order: true, sample: { type: 'with-replacement', size: 5 }, };
 timeline.push(PROVA); 
-
-
-
-
-
-
-
 
 
 var INIZIO = {
