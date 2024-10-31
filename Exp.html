@@ -35,6 +35,7 @@
       type: 'preload',  
       auto_preload: true
     };
+timeline.push(preload)
 
     var pagina_iniziale = {
 	type: 'instructions',
@@ -60,7 +61,7 @@
         +" rispetto a quella del secondo video o " 
         +"la <b>freccia destra </b> se la scatola del </b>secondo</b> video era più pesante. "
         +"<p style='text-align: center';><button class='jspsych-btn2'>Prima <img src='Immagini\\left.png'> </button>"
-        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <button class="jspsych-btn2"><img src="Immagini\\right.png"> Seconda</button>' 
+        + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     <button class="jspsych-btn2"><img src='Immagini\\right.png'> Seconda</button>' 
         ,
   ],
 	post_trial_gap: 0, 
@@ -117,7 +118,7 @@ var quest = {
           choices: ['ArrowLeft','ArrowRight'],
           prompt: [footer + "<h1> &nbsp;  </h1>"+
             '<button class="jspsych-btn2">Prima <img src="Immagini\\left.png"> </button>'
-            +  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="jspsych-btn2"><img src="immagini\\right.png"> Seconda</button>'] , 
+            +  '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="jspsych-btn2"><img src="Immagini\\right.png"> Seconda</button>'] , 
                 data: jsPsych.timelineVariable('data'),
         };
 
