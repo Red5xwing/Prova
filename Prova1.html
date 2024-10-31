@@ -108,7 +108,7 @@ function saveDataAsJSON() {
   // Simula il download del file JSON
   const a = document.createElement('a');
   a.href = url;
-  a.download = firstAnswer+"_"giorno'.json';
+  a.download = firstAnswer+ "_" + giorno + '.json';
   a.click();
   
   // Libera la memoria revocando l'URL temporaneo
