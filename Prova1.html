@@ -56,9 +56,19 @@ var survey = {
         {prompt: '<p>ID', placeholder: 'AA', rows:1, columns: 4}, 
       ], 
   on_finish: function(data) {
-    // Estrai la risposta alla prima domanda
-    var responses = JSON.parse(data.responses);
-    firstAnswer = responses.Q0; // 'Q0' è la prima domanda nel questionario
+    // Controlla se `data.responses` esiste e non è vuoto
+    if (data.responses) {
+      try {
+        // Estrai la risposta alla prima domanda
+        var responses = JSON.parse(data.responses);
+        firstAnswer = responses.Q0; // 'Q0' è la prima domanda nel questionario
+        console.log("First answer:", firstAnswer); // Stampa la risposta per debug
+      } catch (error) {
+        console.error("Errore nel parsing di data.responses:", error);
+      }
+    } else {
+      console.warn("data.responses è undefined o vuoto.");
+    }
   }
     };
 timeline.push(survey)
