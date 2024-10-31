@@ -276,8 +276,21 @@ function saveData(name, data){
   xhr.send(JSON.stringify({filename: name+'_'+today, filedata: data}));
 }    
 
+function saveDataAsJSON() {
+  const jsonData = jsPsych.data.get().json(); // Ottieni i dati in formato JSON
+  const blob = new Blob([jsonData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
 
-
+  // Simula il download del file JSON
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = firstAnswer+ "_" + today + '.json';
+  a.click();
+  
+  // Libera la memoria revocando l'URL temporaneo
+  URL.revokeObjectURL(url);
+}
+	  
 	  
 var today = new Date();
      var dd = String(today.getDate()).padStart(2, '0');
@@ -291,7 +304,12 @@ var today = new Date();
 
 jsPsych.init({
 	timeline: timeline,
-        on_finish: function() {
+        on_trial_finish: function(data) { // `data` contiene i dati del trial corrente
+    if (data.isPausa) {  
+      saveDataAsJSON();  // Salva i dati quando si verifica un trial di pausa
+    }
+  }, 
+	on_finish: function() {
             
             jsPsych.data.get().localSave('csv','P_'+ firstAnswer+ '_' +data+'.csv');
         }
