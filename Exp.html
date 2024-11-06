@@ -87,7 +87,7 @@ var survey = {
         {prompt: 'Anno di nascita', placeholder: '1989', rows:1, columns: 4}
       ], 
 	on_finish: function(data) {       	// Estrai la risposta alla prima domanda
-    var responses = JSON.parse(data.response);
+    var responses = data.response;
     firstAnswer = responses.Q0; 		// 'Q0' è la prima domanda nel questionario
   }
     };
